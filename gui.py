@@ -123,43 +123,43 @@ def update_temperature():
 def update_hourly_forecast():
     # Updating temperature
     hour_1_temp.config(text=str(floor(data1["hourly"][0]["temp"])) + " ᴼ C")
-    hour_1_temp.after(100,update_hourly_forecast)
+    hour_1_temp.after(3600000,update_hourly_forecast)
     hour_2_temp.config(text=str(floor(data1["hourly"][1]["temp"])) + " ᴼ C")
-    hour_2_temp.after(100,update_hourly_forecast)
+    hour_2_temp.after(3600000,update_hourly_forecast)
     hour_3_temp.config(text=str(floor(data1["hourly"][2]["temp"])) + " ᴼ C")
-    hour_3_temp.after(100,update_hourly_forecast)
+    hour_3_temp.after(3600000,update_hourly_forecast)
     hour_4_temp.config(text=str(floor(data1["hourly"][3]["temp"])) + " ᴼ C")
-    hour_4_temp.after(100,update_hourly_forecast)
+    hour_4_temp.after(3600000,update_hourly_forecast)
     hour_5_temp.config(text=str(floor(data1["hourly"][4]["temp"])) + " ᴼ C")
-    hour_5_temp.after(100,update_hourly_forecast)
+    hour_5_temp.after(3600000,update_hourly_forecast)
     hour_6_temp.config(text=str(floor(data1["hourly"][5]["temp"])) + " ᴼ C")
-    hour_6_temp.after(100,update_hourly_forecast)
+    hour_6_temp.after(3600000,update_hourly_forecast)
     # Updating time
     hour_1.config(text=convert_time(data1["hourly"][0]["dt"]))
-    hour_1.after(100,update_hourly_forecast)
+    hour_1.after(3600000,update_hourly_forecast)
     hour_2.config(text=convert_time(data1["hourly"][1]["dt"]))
-    hour_2.after(100,update_hourly_forecast)
+    hour_2.after(3600000,update_hourly_forecast)
     hour_3.config(text=convert_time(data1["hourly"][2]["dt"]))
-    hour_3.after(100,update_hourly_forecast)
+    hour_3.after(3600000,update_hourly_forecast)
     hour_4.config(text=convert_time(data1["hourly"][3]["dt"]))
-    hour_4.after(100,update_hourly_forecast)
+    hour_4.after(3600000,update_hourly_forecast)
     hour_5.config(text=convert_time(data1["hourly"][4]["dt"]))
-    hour_5.after(100,update_hourly_forecast)
+    hour_5.after(3600000,update_hourly_forecast)
     hour_6.config(text=convert_time(data1["hourly"][5]["dt"]))
-    hour_6.after(100,update_hourly_forecast)
+    hour_6.after(3600000,update_hourly_forecast)
     # updating description
     hour_1_desc.config(text=data1["hourly"][0]["weather"][0]["main"].title())
-    hour_1_desc.after(100,update_hourly_forecast)
+    hour_1_desc.after(3600000,update_hourly_forecast)
     hour_2_desc.config(text=data1["hourly"][1]["weather"][0]["main"].title())
-    hour_2_desc.after(100,update_hourly_forecast)
+    hour_2_desc.after(3600000,update_hourly_forecast)
     hour_3_desc.config(text=data1["hourly"][2]["weather"][0]["main"].title())
-    hour_3_desc.after(100,update_hourly_forecast)
+    hour_3_desc.after(3600000,update_hourly_forecast)
     hour_4_desc.config(text=data1["hourly"][3]["weather"][0]["main"].title())
-    hour_4_desc.after(100,update_hourly_forecast)
+    hour_4_desc.after(3600000,update_hourly_forecast)
     hour_5_desc.config(text=data1["hourly"][4]["weather"][0]["main"].title())
-    hour_5_desc.after(100,update_hourly_forecast)
+    hour_5_desc.after(3600000,update_hourly_forecast)
     hour_6_desc.config(text=data1["hourly"][5]["weather"][0]["main"].title())
-    hour_6_desc.after(100,update_hourly_forecast)
+    hour_6_desc.after(3600000,update_hourly_forecast)
 
 
 canvas.place(x = 0, y = 0)
@@ -380,23 +380,74 @@ state_country.place(x=750, y=70)
 
 
 # Right side rectangle with time, temp, location, 3 days forecast, sunrise, sunset
-canvas.create_rectangle(
-    715.0,
-    0.0,
-    1035.0,
-    665.0,
-    fill="#0F0C29",
-    outline="")
+def semi_round_rectangle(x1, y1, x2, y2, radius=25, **kwargs):
+    points = [x1+radius, y1,
+              x1+radius, y1,
+              x2-radius, y1,
+              x2-radius, y1,
+              x2, y1,
+              x2,y1,
+              x2,y1,
+              x2,y2,
+              x2,y2,
+            #   x2, y1+radius,
+            #   x2, y1+radius,
+            #   x2, y2-radius,
+            #   x2, y2-radius,
+              x2, y2,
+              x2-radius, y2,
+              x2-radius, y2,
+              x1+radius, y2,
+              x1+radius, y2,
+              x1, y2,
+              x1, y2-radius,
+              x1, y2-radius,
+              x1, y1+radius,
+              x1, y1+radius,
+              x1, y1]
+    return canvas.create_polygon(points, **kwargs, smooth=True)
 
+# canvas.create_rectangle(
+#     715.0,
+#     0.0,
+#     1035.0,
+#     665.0,
+#     fill="#0F0C29",
+#     outline="",
+#     )
+my_rectangle = semi_round_rectangle(715.0, 0.0, 1035.0, 665.0, radius=35, fill="#0F0C29")
 
 # Today Details box
-canvas.create_rectangle(
-    10.0,
-    125.0,
-    706.0,
-    658.0,
-    fill="#0575E6",
-    outline="")
+def round_rectangle(x1, y1, x2, y2, radius=25, **kwargs):
+    points = [x1+radius, y1,
+              x1+radius, y1,
+              x2-radius, y1,
+              x2-radius, y1,
+              x2, y1,
+              x2, y1+radius,
+              x2, y1+radius,
+              x2, y2-radius,
+              x2, y2-radius,
+              x2, y2,
+              x2-radius, y2,
+              x2-radius, y2,
+              x1+radius, y2,
+              x1+radius, y2,
+              x1, y2,
+              x1, y2-radius,
+              x1, y2-radius,
+              x1, y1+radius,
+              x1, y1+radius,
+              x1, y1]
+    return canvas.create_polygon(points, **kwargs, smooth=True)
+# canvas.create_rectangle(
+#     10.0,
+#     125.0,
+#     706.0,
+#     658.0,
+#     fill="#0575E6",
+#     outline="")
+my_rectangle = round_rectangle(10.0, 125.0, 706.0, 658.0, radius=35, fill="#0575E6")
 
 # Logo box
 canvas.create_rectangle(
